@@ -1,24 +1,31 @@
-#include"Activity2.h"
+#ifndef __AVR_ATmega328__
+#define __AVR_ATmega328__
+#endif
+
+#include "project_config.h"
+#include "activity2.h"
 
 void InitADC()
 {
- ADMUX=(1<<REFS0);
- ADCSRA=(1<<ADEN)|(7<<ADPS0);
+    ADC_MUX_REGISTER|=(1<<ADC_REF_VOLTAGE);//SET REF VOLTAGE 5VOLT
+    ADC_CONTROL_STATUS_REGISTER|=(1<<ADC_ENABLE)|(7<<ADC_PRESCALER);//ENABLE ADC AND SET PRESCALER TO /128
 }
-
 
 uint16_t ReadADC(uint8_t ch)
 {
-    
- ADMUX&=0xf8;
- ch=ch&0b00000111;
- ADMUX|=ch;
- ADCSRA|=(1<<ADSC);
+    //channel must be within 0-7
+    ADC_MUX_REGISTER&=0xf8;
+    ch=ch&0b00000111;
+    ADC_MUX_REGISTER|=ch;
 
- // Wait for conversion to complete
- while(!(ADCSRA & (1<<ADIF)));
+    //start conversion
+    ADC_CONTROL_STATUS_REGISTER|=(1<<ADC_START_CONVERSION);
 
- ADCSRA|=(1<<ADIF);
+    //WAIT FOR CONVERSION TO COMPLETE
+    while(!(ADC_CONTROL_STATUS_REGISTER & (1<<ADC_INTERUPT_FLAG)));
 
- return (ADC);
+    //CLEAR ADIF BY WRITING 1  TO IT
+    ADC_CONTROL_STATUS_REGISTER|=(1<<ADC_INTERUPT_FLAG);
+
+    return(ADC);
 }
