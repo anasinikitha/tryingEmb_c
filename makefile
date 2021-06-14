@@ -3,7 +3,7 @@ PROJ_NAME = trying
 BUILD_DIR = Build
 
 # All Source code files
-SRC = project_main.c\
+SRC = main.c\
 src/user-utils.c\
 src/activity1.c\
 src/activity2.c\
