@@ -1,19 +1,33 @@
-#ifndef __ACTIVITY2_H_
-#define __ACTIVITY2_H_
+#ifndef __ACTIVITY2_H__
+#define __ACTIVITY2_H__
+/**
+ * @file activity2.h
+ * @author Anasi Nikitha(anasinikitha3@gmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-06-12
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 
-#ifndef __AVR_ATmega328__
-  #define __AVR_ATmega328__
-#endif
 
-
-#define F_CPU 16000000UL 	/**< Clock Frequency of MCU is 16 MHz */
-
-#include<avr/io.h>
-#include<util/delay.h>
-
-void InitADC();
-
+/**
+ * Include files
+ */
+#include <avr/io.h>
+/**
+ * @brief Function for reading the value from ADC channel
+ *
+ * @param ch
+ * @return uint16_t
+ */
 uint16_t ReadADC(uint8_t ch);
+/**
+ * @brief Function for initalizing the ADC 
+ *
+ */
+void InitADC();
 
 
 #endif
