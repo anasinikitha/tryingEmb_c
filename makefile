@@ -1,13 +1,14 @@
-PROJ_NAME = Try_again
+PROJ_NAME = trying
 
 BUILD_DIR = Build
 
 # All Source code files
-SRC = main.c\
-src/Activity1.c\
-src/Activity2.c\
-src/Activity3.c\
-src/Activity4.c
+SRC = project_main.c\
+src/user-utils.c\
+src/activity1.c\
+src/activity2.c\
+src/activity3.c\
+src/activity4.c
 
 # All header file paths
 INC = -I inc
