@@ -1,40 +1,24 @@
-#include"Activity1.h"
-#include"Activity2.h"
-#include"Activity3.h"
-#include"Activity4.h"
-
-void peripheral_init(void)
-{
-	/* Configure LED Pin */
-	 DDRB |= (1 << DDB0);
-     DDRD&=~(1<<PD0);
-     DDRD&=~(1<<PD4);
-	 DDRD&=~(1<<PD6);
-
-     PORTD|=(1<<PD0);
-     PORTD|=(1<<PD4);
-
-	 InitADC();//Initialise ADC
-     InitPwm();//Initialization for PWM output
-	 USARTInit(103);//USART Initiation
-
-}
-
-
-
-void change_led_state(uint8_t state)
-{
-	LED_PORT = (state << LED_PIN);
-}
-
-
+#ifndef __AVR_ATmega328__
+#define __AVR_ATmega328__
+#endif
 /**
- * @brief Main function where the code execution starts
- * 
- * @return int Return 0 if the program completes successfully
- * @note PORTB0 is in sink config. i.e when pin is Low, the LED will turn OFF
- * @note PORTB0 is in sink config. i.e when pin is High, the LED will turn ON
+ * @file project_main.c
+ * @author Prapti Bhajiyawala (praptibhajiyawala312@gmail.com)
+ * @brief Activity1 LED is ON only when Heater is ON and Occupancy of Person is Detected
+ * @version 0.1
+ * @date 2021-04-24
+ *
+ * @copyright Copyright (c) 2021
+ *
  */
+#include "project_config.h"
+
+#include "user_utils.h"
+#include "activity1.h"
+#include "activity2.h"
+#include "activity3.h"
+#include "activity4.h"
+
 int main(void)
 {
 	/* Initialize Peripherals */
@@ -42,42 +26,45 @@ int main(void)
 
 	for(;;)
 	{
-        if(!(PIND &(1<<PD0)) && !(PIND &(1<<PD4)))
+        if(!(HEATER_OCCUPANCY_PIN & (1<<HEARTER_PIN))  &&  !(HEATER_OCCUPANCY_PIN & (1<<OCCUPANCY_PIN)))
         {
-			uint16_t temp;
-          change_led_state(LED_ON);
-		  delay_ms(LED_ON_TIME);
-		  temp= ReadADC(0);
-           delay_ms(200);
+            uint16_t temp;
+            change_led_state(LED_ON);
+		    delay_ms(LED_ON_TIME);
 
-		    USARTWriteData(temp);
+            temp=ReadADC(0);
+            _delay_ms(200);
 
-		   if(0b0000000000000000 <= temp  && temp <= 0b0000000011001000)
-           {
-               OCR0A=51; //20%
-               delay_ms(200);
-           }
-           else if (0b0000000011001001 <= temp && temp <= 0b0000000111110100)
-           {
-                OCR0A=102; //40%
-               delay_ms(200);
-           }
-           else if(0b0000000111110101 <= temp && temp <= 0b0000001010111100)
-           {
-               OCR0A=179; //70%
-               delay_ms(200);
-           }
-           else 
-           {
-               OCR0A=243; //95%
-               delay_ms(200);
-           }
+            USARTWriteData(temp);
+
+            if (0b0000000000000000 <= temp  && temp <= 0b0000000011001000)
+            {
+                OUTPUT_COMPAIR_REGISTER_0A=51; // 20% PWM
+               _delay_ms(200);
+            }
+            else if (0b0000000011001001 <= temp && temp <= 0b0000000111110100)
+            {
+                OUTPUT_COMPAIR_REGISTER_0A=102; // 40% PWM
+               _delay_ms(200);
+            }
+            else if (0b0000000111110101 <= temp && temp <= 0b0000001010111100)
+            {
+                OUTPUT_COMPAIR_REGISTER_0A=179; // 70% PWM
+               _delay_ms(200);
+            }
+            else
+            {
+                OUTPUT_COMPAIR_REGISTER_0A=243; // 95% PWM
+               _delay_ms(200);
+            }
+
         }
         else
-		{
-          change_led_state(LED_OFF);
-		  delay_ms(LED_OFF_TIME);
-        }	
+        {
+            change_led_state(LED_OFF);
+		    delay_ms(LED_OFF_TIME);
+        }
+
 	}
 	return 0;
 }
