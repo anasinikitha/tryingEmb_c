@@ -1,35 +1,36 @@
-#ifndef __ACTIVITY4_H_
-#define __ACTIVITY4_H_
+#ifndef __ACTIVITY4_H__
+#define __ACTIVITY4_H__
 /**
- * @file ACTIVITY1.h
- * @author Nikitha A ()
- * @brief Activity3 to see variation of temperature in CRO connected to AVR328 MCU GPIO Pin when heater button is presses
+ * @file activity4.h
+ * @author Anasi Nikitha (anasinikitha3@gmail.com)
+ * @brief
  * @version 0.1
- * @date 2021-04-29
- * 
+ * @date 2021-06-12
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
-#ifndef __AVR_ATmega328__
-  #define __AVR_ATmega328__
-#endif
-
-#define F_CPU 16000000UL 	/**< Clock Frequency of MCU is 16 MHz */
-
-#include<util/delay.h>
-
-#include<avr/io.h>
 /**
- * @brief Function for Initializing USART operation
- * 
+ * Include files
+ */
+#include <avr/io.h>
+/**
+ * @brief Function for initalizing the USART
+ *
  */
 void USARTInit(uint16_t);
-
 /**
- * @brief Function for USRAT write operation
- * 
+ * @brief Function for USART write operation
+ *
  */
 void USARTWriteData(uint16_t);
+/**
+ * @brief Function for USART read operation
+ *
+ * @return uint16_t
+ */
+//uint16_t USARTReadData();
+
 
 #endif
