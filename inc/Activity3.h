@@ -1,28 +1,29 @@
-#ifndef __ACTIVITY3_H_
-#define __ACTIVITY3_H_
+
+
+
+#ifndef __ACTIVITY3_H__
+#define __ACTIVITY3_H__
 /**
- * @file ACTIVITY1.h
- * @author Nikitha A ()
- * @brief Activity3 to see variation of temperature in CRO connected to AVR328 MCU GPIO Pin when heater button is presses
+ * @file activity3.h
+ * @author Anasi Nikitha(anasinikitha3@gmail.com)
+ * @brief
  * @version 0.1
- * @date 2021-04-28
- * 
+ * @date 2021-06-12
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
-#ifndef __AVR_ATmega328__
-  #define __AVR_ATmega328__
-#endif
 
-#define F_CPU 16000000UL 	/**< Clock Frequency of MCU is 16 MHz */
+/**
+ * Include files
+ */
+#include <avr/io.h>
+/**
+ * @brief Function for initalizing the ADC
+ *
+ */
+void InitPWM();
 
-#include<avr/io.h>
-#include<util/delay.h>
-
- 
-
-
-void InitPwm();
 
 #endif
